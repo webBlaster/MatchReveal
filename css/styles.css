@@ -1,0 +1,115 @@
+body{
+    padding:0;
+    margin:0;
+    border:none;
+}
+#maincontainer{
+    margin:0;
+    padding:0;
+    border:0;
+}
+#sub-form{
+    width:100%;
+    background-color:rgba(255, 255, 255, 0.178);
+    margin-top:80px;
+    padding:20px;
+}
+#sub-form input{
+    margin-top:10px;
+    margin-bottom:10px;
+    width:60%;
+}
+#first-column{
+    padding:30px;
+}
+.section{
+    padding:0;
+    margin:0;
+    border:none;
+}
+#second-section{
+    padding:0;
+    margin:0;
+}
+#first-section .row{
+    width:90%;
+}
+#navigation{
+    padding:2px;
+    margin-left:83%;
+}
+#track{
+    width:60%;
+    margin:auto;
+}
+#track table{
+    width:100% !important;
+}
+
+#track td,#track th{
+    text-align:center !important;
+    border:1px solid black;
+}
+#navigation a{
+    color:white;
+    padding:2px;
+}
+
+#signin{
+    height:100vh;
+    padding:40px;
+    padding-bottom:100px;
+}
+.signin{
+    margin-bottom:60px;
+}
+#signin-form{
+    padding:50px;
+    width:40%;
+    margin:auto;
+    border-radius: 4px;
+    background-color:rgba(255, 255, 255, 0.178);
+}
+#signin-form input{
+    margin:15px;
+    width:80%;
+}
+#dashboard{
+    height: 100vh;
+    padding:60px;
+}
+#today{
+    padding-bottom:200px;
+}
+#adminpage{
+    height:100vh !important;
+    padding-top:10vh;
+}
+#adminform{
+    margin:auto;
+    text-align:center;
+}
+#adminform input{
+    width:13%;
+}
+#admin-signin{
+    width:60%;
+    margin:auto;
+}
+#admin-login{
+    height:100vh;
+}
+@media screen and (max-width:500px){
+    #track{
+        width:90%;
+    }
+    #navigation{
+        margin-left:65%;
+    }
+    #signin-form{
+        width:98%;
+    }
+    #adminform input{
+        width:30%;
+    }
+}
