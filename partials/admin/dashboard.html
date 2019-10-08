@@ -1,17 +1,87 @@
-<div id="adminpage" class="blue-grey center">
-    <form id="adminform">
-        <input type="text" placeholder="Game" required>
-        <input type="text" placeholder="League" required>
-        <input type="time" placeholder="Time" required>
-        <input type="text" placeholder="Prediction" required>
-        <input type="number" step="any" min="1" max="100" placeholder="Odds" required>
-        <input type="text" list="cartegory" placeholder="Cartegory" required>
-        <datalist id="cartegory">
+<div id="adminpage" class="center">
+    <span><a href="#/wb-signin">Logout</a></span>
+    <h5>Add Predictions</h5>
+    <form id="adminform" ng-submit="add()">
+        <input type="text" placeholder="Game" ng-model="data.game" required>
+        <input type="text" placeholder="League" ng-model="data.league" required>
+        <input type="text" placeholder="Time" ng-model="data.time" required>
+        <input type="text" placeholder="Prediction" ng-model="data.pred" required>
+        <input type="number" step="any" min="1" max="100" ng-model="data.odds" placeholder="Odds" required>
+        <input type="text" list="category" ng-model="data.cat" placeholder="Category" required>
+        <datalist id="category">
             <option value="low">Low odd tips</option>
             <option value="2+">2+ odd tips</option>
-            <option value="midnight">Midnight stake</option>
+            <option value="midnight">High Risk</option>
             <option value="other">Other Prediction</option>
         </datalist>
         <input type="submit" class="btn" value="add">
     </form>
+
+    <div class="show tablespace">
+            <table id="track" class="white blue-grey-text">
+                    <tr class="black white-text">
+                        <td>Date</td>
+                        <td>Time</td>
+                        <td>Game</td>
+                        <td>Prediction</td>
+                        <td>Odds</td>
+                        <td>Category</td>
+                      </tr>
+                  <tr ng-repeat="pred in predictions">
+                    <td>{{pred.date}}</td>
+                    <td>{{pred.time}}</td>
+                    <td><span><b>{{pred.league}}</b></span><br/>{{pred.game}}</td>
+                    <td>{{pred.prediction}}</td>
+                    <td>{{pred.odds}}</td>
+                    <td>{{pred.category}}</td>
+                    <td><div class="btn red" ng-click="remove(pred.id)">X</div></td>
+                  </tr>
+                  </table>
+    </div>
+
+    <div class="black white-text center subscribeuser">
+        <h3>Subscribe user</h3>
+        <div>
+            <form ng-submit="subscribeuser()">
+                <input type="email" placeholder="input user email" class="white-text" ng-model="subdata.email" required>
+                <input type="text" list="type" placeholder="type" class="white-text" ng-model="subdata.type" required>
+                <datalist id="type">
+                    <option value="trial">Trial</option>
+                    <option value="monthly">Monthly</option>
+                </datalist>
+                <input type="submit" class="btn" value="activate">
+                <h6 class="white-text">{{}}</h6>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="winnings">
+        <h5>Add to Winnings</h5>
+        <form id="adminform" ng-submit="addtowins()">
+            <input type="text" placeholder="Game" ng-model="wins.game" required>
+            <input type="text" placeholder="League" ng-model="wins.league" required>
+            <input type="text" placeholder="Time" ng-model="wins.time" required>
+            <input type="text" placeholder="GameDate" ng-model="wins.gamedate" required>
+            <input type="text" placeholder="Prediction" ng-model="wins.pred" required>
+            <input type="submit" class="btn" value="add">
+        </form>
+        <div>
+            <table id="track">
+                <tr class="black white-text">
+                    <td>Date</td>
+                    <td>Time</td>
+                    <td>Game</td>
+                    <td>Prediction</td>
+                  </tr>
+              <tr ng-repeat="win in winrecord">
+                <td>{{win.gamedate}}</td>
+                <td>{{win.time}}</td>
+                <td><span><b>{{win.league}}</b></span><br/>{{win.game}}</td>
+                <td>{{win.prediction}}</td>
+                <td><div class="btn red" ng-click="remfromwins(win.id)">X</div></td>
+              </tr>
+            </table>
+        </div>
+    </div>
 </div>

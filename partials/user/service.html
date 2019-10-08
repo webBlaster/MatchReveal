@@ -1,86 +1,89 @@
-<div>
-    <div id="navigation">
+<div class="service">
+  <div class="black-overlay">
+    <div>
         <ul class="nav">
-            <span><a href="" ng-click="logout()">logout </a></span>
-            <span><a href="">{{daysleft}}<b> days left</b></a></span> 
+            <span><a href="#/home" class="white-text">Home</a></span>
+            <span><a href="" ng-click="logout()" class="white-text">logout </a></span>
+            <span><a href="" class="white-text">{{}}<b>free</b></a></span> 
         </ul>
     </div>
     <div id="feeds">
-        <h2 class="center">Todays Predictions</h2>
+        <h2 class="center white-text">Todays Predictions</h2>
         <div id="today">
                 <div id="track" class="center">
-                    <h4>Low odd Tips</h4>
+                    <h4 class="orange-text">Low odd Tips</h4>
                         <table>
-                                <tr class="black white-text">
+                                <tr class="black-text recordhead">
                                         <td>Date</td>
                                         <td>Time</td>
                                         <td>Game</td>
                                         <td>Prediction</td>
                                         <td>Odds</td>
                                       </tr>
-                          <tr ng-repeat="cast in casts">
+                          <tr ng-repeat="cast in low" class="white-text record">
                             <td>{{cast.date}}</td>
                             <td>{{cast.time}}</td>
-                            <td><span><b>{{track.league}}</b></span><br/>{{cast.game}}</td>
+                            <td><span><b>{{cast.league}}</b></span><br/>{{cast.game}}</td>
                             <td>{{cast.prediction}}</td>
-                            <td>{{cast.Odds}}</td>
+                            <td>{{cast.odds}}</td>
                           </tr>
                         </table>
 
-                        <h4>2+ Odd Tips</h4>
+                        <h4 class="orange-text">2+ Odd Tips</h4>
                         <table>
-                                <tr class="black white-text">
+                                <tr class="black-text recordhead">
                                         <td>Date</td>
                                         <td>Time</td>
                                         <td>Game</td>
                                         <td>Prediction</td>
                                         <td>Odds</td>
                                       </tr>
-                            <tr ng-repeat="cast in casts">
+                            <tr ng-repeat="cast in plustwo" class="white-text record">
                               <td>{{cast.date}}</td>
                               <td>{{cast.time}}</td>
-                              <td><span><b>{{track.league}}</b></span><br/>{{cast.game}}</td>
+                              <td><span><b>{{cast.league}}</b></span><br/>{{cast.game}}</td>
                               <td>{{cast.prediction}}</td>
-                              <td>{{cast.Odds}}</td>
+                              <td>{{cast.odds}}</td>
                             </tr>
                           </table>
 
-                          <h4>Midnight stake</h4>
+                          <h4 class="orange-text">Super Risk</h4>
                           <table>
-                                <tr class="black white-text">
+                                <tr class="black-text recordhead">
                                         <td>Date</td>
                                         <td>Time</td>
                                         <td>Game</td>
                                         <td>Prediction</td>
                                         <td>Odds</td>
                                       </tr>
-                              <tr ng-repeat="cast in casts">
+                              <tr ng-repeat="cast in midnight" class="white-text record">
                                 <td>{{cast.date}}</td>
                                 <td>{{cast.time}}</td>
-                                <td><span><b>{{track.league}}</b></span><br/>{{cast.game}}</td>
+                                <td><span><b>{{cast.league}}</b></span><br/>{{cast.game}}</td>
                                 <td>{{cast.prediction}}</td>
-                                <td>{{cast.Odds}}</td>
+                                <td>{{cast.odds}}</td>
                               </tr>
                             </table>
 
-                            <h4>Other Predictions</h4>
+                            <h4 class="orange-text">Other Predictions</h4>
                             <table>
-                                    <tr class="black white-text">
+                                    <tr class="black-text recordhead">
                                             <td>Date</td>
                                             <td>Time</td>
                                             <td>Game</td>
                                             <td>Prediction</td>
                                             <td>Odds</td>
                                           </tr>
-                                <tr ng-repeat="cast in casts">
+                                <tr ng-repeat="cast in other" class="white-text record">
                                   <td>{{cast.date}}</td>
                                   <td>{{cast.time}}</td>
-                                  <td><span><b>{{track.league}}</b></span><br/>{{cast.game}}</td>
+                                  <td><span><b>{{cast.league}}</b></span><br/>{{cast.game}}</td>
                                   <td>{{cast.prediction}}</td>
-                                  <td>{{cast.Odds}}</td>
+                                  <td>{{cast.odds}}</td>
                                 </tr>
                               </table>
                 </div>
               </div>
           </div>
+    </div>
 </div>  

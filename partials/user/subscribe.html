@@ -1,10 +1,46 @@
-<div id="dashboard" class="center blue-grey white-text">
-    <div class="center">
-        <p ng-click="logout()" class="btn center">logout</p>
-        <p ng-click="checkauth()" class="btn">logged in?</p>
+<div id="dashboard" class="white-text" data-name="{{user}}">
+    <div class="center grey">
+        <a href=""><p ng-click="logout()" class="center logout">Logout</p></a>
     </div>
-    <p>Welcome <span>{{user}}</span></p>
-    <p>This account has not been activated</p>
-    <p>You need to subscribe to activate it</p>
-    <button class="btn"><a href="#/service" class="white-text">SUBSCRIBE</a></button>
+   
+    <div id="trail-section" class="center grey paysection">
+        <h3>3 days trial</h3>
+        <button class="btn"><a href="" class="white-text" onclick="payWithPaystack('trial')">pay with card</a></button>
+        <h5>Dont do card transactions?</h5>
+        <p>pay to this account</p>
+        <p>Cash Bank Deposit / Mobile Transfer<br/>
+            To subscribe for our services kindly make your payment to the following bank account <br/>
+            Amount:- 500Naira for 3 days <br/>
+            Account Number:- 3042877782 <br/>
+            Account Name:- Abujade Damilola <br/>
+            Bank:- First Bank<br/>
+            After payment kindly send us the following payment details to matchreveal@gmail.com<br/>
+            <ol>
+                <li>An image of the deposit/payment slip</li>
+                <li>Your mobile number</li>
+                <li>Your full names as  reflected in the payment</li>
+                <li>Your registered email address </li>
+            </ol>   
+            </p>
+    </div>
+    <div id="monthly-section" class="center black paysection">
+        <h3>Monthly Subscription</h3>
+        <button class="btn"><a href="" class="white-text" onclick="payWithPaystack('monthly')">pay with card</a></button>
+        <h5>Dont do card transactions?</h5>
+        <p>pay to this account</p>
+        <p>Cash Bank Deposit / Mobile Transfer<br/>
+            To subscribe for our services kindly make your payment to the following bank account <br/>
+            Amount:- 2000Naira for 30 days <br/>
+            Account Number:- 3042877782 <br/>
+            Account Name:- Abujade Damilola <br/>
+            Bank:- First Bank<br/>
+            After payment kindly send us the following payment details to matchreveal@gmail.com<br/>
+            <ol>
+                <li>An image of the deposit/payment slip</li>
+                <li>Your mobile number</li>
+                <li>Your full names as  reflected in the payment</li>
+                <li>Your registered email address </li>
+            </ol>   
+            </p>
+    </div>
 </div>

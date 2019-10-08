@@ -1,14 +1,16 @@
-<div id="signin" class="blue-grey center white-text">
+<div class="main-container">
+<div id="signin" class="black-overlay center white-text">
         <div id="navigation" class="blue-black white-text signin">
-            <a href="#home">home</a>
+            <a href="#home" class="white-text">home</a>
         </div>
 
     <form ng-submit="login()" id="signin-form" class="center">
         <h5>Sign in</h5>
-        <input ng-model="formdata.email" type="email" placeholder="Email" required>
-        <input ng-model="formdata.password" type="password" placeholder="Password" required>
-        <input type="submit" class="btn" value="signin">
+        <input ng-model="formdata.email" type="email" placeholder="Email" class="white-text" required>
+        <input ng-model="formdata.password" type="password" placeholder="Password" class="white-text" required>
+        <input type="submit" class="btn c-btn" value="signin">
         <div id="response" class="{{feedback.class}} center">{{feedback.message}}</div>
-        <p>Dont have an account yet? <a href="#home" style="color:white"><u>signup</u></a></p>
+        <p>Dont have an account yet? <a href="#home" style="color:white"><u class="orange-text">signup</u></a></p>
     </form>
+</div>
 </div>

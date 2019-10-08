@@ -36,10 +36,12 @@ class Admin
     }
     //adds a prediction 
     public function addprediction($game,$league,$time,$prediction,$odds,$category){
+        //current date
+        $currentdate = date("y/m/d",time());
         //sql to insert all prediction data into prediction table
         $sql = "INSERT INTO predictions 
-        (game,league,time,prediction,odds,category) 
-        VALUES('$game','$league','$time','$prediction','$odds','$category')";
+        (game,league,time,prediction,odds,category,date) 
+        VALUES('$game','$league','$time','$prediction','$odds','$category','$currentdate')";
 
         $connect = $this->db->connect();
         $insert = $connect->exec($sql);
@@ -50,16 +52,38 @@ class Admin
             echo "0";
         }
     }
-    //get todays predictions
-    public function getpredictions(){
+    //delete prediction
+    public function deleteprediction($id){
+        $sql = "DELETE FROM predictions WHERE id = '$id'";
+        $conn = $this->db->connect()->exec($sql);
+        if($conn == 1){
+            echo "1";
+        }else{
+            echo "0";
+        }
+    }
+    //add to winnings
+    public function addtowins($game,$league,$time,$prediction,$gamedate){
+        //sql to insert into wins table
+        $sql = "INSERT INTO wins (game,league,time,prediction,gamedate)
+         VALUES('$game','$league','$time','$prediction','$gamedate')";
 
-         //current date
-         $currentdate = date("y/m/d",time());
+         $conn = $this->db->connect()->exec($sql);
+         if($conn == 1){
+             echo "1";
+         }else{
+             echo "0";
+         }
 
-        //sql to get all todays post
-        $sql = "SELECT * FROM predictions WHERE date = '$currentdate'";
-        $result = $this->db->connect()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($result);
-
+    }
+    //remove from winnings
+    public function remfromwins($id){
+        $sql = "DELETE FROM wins WHERE id = '$id'";
+        $conn = $this->db->connect()->exec($sql);
+        if($conn == 1){
+            echo "1";
+        }else{
+            echo "0";
+        }
     }
 }

@@ -1,6 +1,6 @@
 <div class="black" id="admin-login">
-    <form id="admin-signin" class="center">
-        <input type="text" placeholder="Enter Super Secret Key" class="center" required>
+    <form id="admin-signin" ng-submit="login()" class="center">
+        <input type="password" ng-model="data.password" placeholder="Enter Super Secret Key" class="center white-text" required>
         <input type="submit" placeholder="Enter" class="btn" required>
     </form>
 </div>

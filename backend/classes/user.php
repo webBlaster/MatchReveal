@@ -11,12 +11,16 @@ class User
     //registers a new user
     public function register($fullname,$email,$number,$password){
         //connects to the db
-        $checkersql = "SELECT * FROM users WHERE email = '$email' and fullname = '$fullname'";
+        $checkersql = "SELECT * FROM users WHERE email = '$email' or fullname = '$fullname'";
         $connect = $this->db->connect();
         $check = $connect->query($checkersql);
         $message;
         if($check->rowcount()==0){
-            $adduser = "INSERT INTO users (fullname,email,number,password) VALUES ('$fullname','$email','$number','$password')";
+
+            $currentdate = date('y/m/d',time());//current date
+            $adduser = "INSERT INTO users (fullname,email,number,password,enddate)
+             VALUES ('$fullname','$email','$number','$password','$currentdate')";
+
             $add = $connect->exec($adduser);
             if($add == 1){
                 $message = "new user succesfully created";
@@ -47,7 +51,7 @@ class User
         }
     }
     //get user id
-    private function userid($username){
+    private function userid($email){
         $connect = $this->db->connect();
         $sql = "SELECT id FROM users where email ='$email'";
         $result = $connect->query($sql);
@@ -55,8 +59,18 @@ class User
         $id = $result[0]["id"];
         return $id;
     }
+    //user registered email
+    public function getuseremail(){
+        session_start();
+        if(isset($_SESSION['auth'])){
+            echo $_SESSION['user'];
+        }else{
+            echo "login required";
+        }
+    }
+    
     //logs out a user
-    public function logout($username){
+    public function logout(){
         //unset user sessions
         session_start();
         unset($_SESSION['user']);
@@ -64,4 +78,45 @@ class User
         echo json_encode("user session terminated");
 
     }
-}
+
+    private function getenddate($email){
+         //sql to select the expiration date
+         $enddatesql = "SELECT enddate FROM users WHERE email = '$email'";
+         //connect and query the db
+         $conn = $this->db->connect();
+         $enddate = $conn->query($enddatesql)->fetchAll(PDO::FETCH_ASSOC);
+         $enddate = $enddate[0]["enddate"];
+         return $enddate;
+    }
+     //checks user subscription status
+     public function subscribestatus(){
+         //get user email through sessions
+         //session_start();
+         /*$email = $_SESSION["user"];
+         $enddate = $this->getenddate($email);
+        //current date
+        $currentdate = date("Y-m-d",time());
+        if($currentdate >= $enddate){
+            echo "0";
+        }else{
+            echo "1";
+        }*/
+        echo "1";
+
+    }
+    public function getdaysleft(){
+        session_start();
+        $email = $_SESSION["user"];
+        $enddate = $this->getenddate($email);
+        $currentdate = date('Y-m-d',time());
+
+        $datediff = (strtotime($enddate) - strtotime($currentdate))/86400;
+        if($datediff >= 1){
+            echo json_encode($datediff);
+        }else{
+            echo "0";
+        }
+        
+       
+    }
+    }

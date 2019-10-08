@@ -10,8 +10,22 @@ app.config([
     $routeProvider
       .when("/home", {
         templateUrl: "partials/home.html",
-        controller: "homeController"
+        controller: "homeController",
+        resolve: {
+          wins: function($q, $rootScope, $http) {
+            var defer = $q.defer();
+            //get array of wins
+            $http.get("backend/admin/getwins.php").then(function(response) {
+              $rootScope.winnings = response.data;
+              defer.resolve();
+            });
+            return defer.promise;
+          }
+        }
       })
+      .when("/about", { templateUrl: "partials/user/about.html" })
+      .when("/policy", { templateUrl: "partials/user/policy.html" })
+      .when("/termsandcond", { templateUrl: "partials/user/tandc.html" })
       .when("/signin", {
         templateUrl: "partials/user/signin.html",
         controller: "signinController"
@@ -20,15 +34,32 @@ app.config([
         templateUrl: "partials/user/subscribe.html",
         controller: "subscribeController",
         resolve: {
-          function($rootScope, $http, $location) {
+          data: function($q, $rootScope, $http, $location) {
+            var defer = $q.defer();
             $http
               .get("backend/includes/authstatus.php")
               .then(function(response) {
                 if (response.data === "disconnected") {
                   $location.path("/signin");
+                } else {
+                  $http
+                    .get("backend/users/subscribestatus.php")
+                    .then(function(response) {
+                      if (response.data == "1") {
+                        $location.path("/service");
+                      } else {
+                        $http
+                          .get("backend/users/getemail.php")
+                          .then(function(response) {
+                            $rootScope.userdata = response.data;
+                            defer.resolve();
+                          });
+                      }
+                    });
                 }
-                $rootScope.userdata = "Creator";
               });
+
+            return defer.promise;
           }
         }
       })
@@ -36,24 +67,62 @@ app.config([
         templateUrl: "partials/user/service.html",
         controller: "serviceController",
         resolve: {
-          function($rootScope, $http, $location) {
+          data: function($q, $rootScope, $http, $location) {
+            var defer = $q.defer();
             $http
               .get("backend/includes/authstatus.php")
               .then(function(response) {
                 if (response.data === "disconnected") {
                   $location.path("/signin");
+                } else {
+                  $http
+                    .get("backend/users/subscribestatus.php")
+                    .then(function(response) {
+                      if (response.data !== "1") {
+                        $location.path("/subscribe");
+                      } else {
+                        $http
+                          .get("backend/users/sortedpredict.php")
+                          .then(function(response) {
+                            $rootScope.sortedpred = response.data;
+                            $http
+                              .get("backend/users/daysleft.php")
+                              .then(function(response) {
+                                $rootScope.daysleft = response.data;
+                                defer.resolve();
+                              });
+                          });
+                      }
+                    });
                 }
-                $rootScope.userdata = "Creator";
               });
+            return defer.promise;
           }
         }
       })
       .when("/wb-signin", {
-        templateUrl: "partials/admin/signin.html"
+        templateUrl: "partials/admin/signin.html",
+        controller: "wb-signinController"
       })
       .when("/wb-admin", {
         templateUrl: "partials/admin/dashboard.html",
-        controller: ""
+        controller: "wb-adminController",
+        resolve: {
+          data: function($q, $rootScope, $location, $http) {
+            var defer = $q.defer();
+            if ($rootScope.admin !== true) {
+              $location.path("/wb-signin");
+            }
+            $http
+              .get("backend/admin/getpredictions.php")
+              .then(function(response) {
+                $rootScope.pred = response.data;
+                defer.resolve();
+              });
+
+            return defer.promise;
+          }
+        }
       })
       .otherwise({ redirectTo: "/home" });
   }
@@ -62,39 +131,21 @@ app.config([
 //home controller
 app.controller("homeController", [
   "$scope",
+  "$rootScope",
   "$http",
-  function($scope, $http) {
+  function($scope, $rootScope, $http) {
     $scope.feedback = { message: "", class: "" };
     $scope.formdata = {};
-    $scope.tracks = [
-      {
-        date: "11/04/19",
-        time: "9:30pm",
-        league: "sweden phisvensran",
-        game: "malmo vs sundsvail",
-        prediction: "malmo wins",
-        Odds: 1.56,
-        result: "won"
-      },
-      {
-        date: "11/04/19",
-        time: "9:30pm",
-        league: "sweden phisvensran",
-        game: "malmo vs sundsvail",
-        prediction: "malmo wins",
-        Odds: 1.56,
-        result: "won"
-      }
-    ];
+    $scope.tracks = $rootScope.winnings;
+
     $scope.register = function() {
       if ($scope.formdata.password === $scope.formdata.confirmpassword) {
-        console.log($scope.formdata);
         $http({
           method: "POST",
           url: "backend/users/register.php",
           data: $scope.formdata
         }).then(function(response) {
-          alert(response.data);
+          console.log(response.data);
         });
         $scope.feedback.message = "user sucessfully created";
         $scope.feedback.class = "green-text white btn";
@@ -102,8 +153,7 @@ app.controller("homeController", [
       } else {
         $scope.formdata.password = "";
         $scope.formdata.confirmpassword = "";
-        console.log("your password does not match.. try again");
-        $scope.feedback.message = "your password does not match.. try again";
+        $scope.feedback.message = "inconsistent password";
         $scope.feedback.class = "red-text white btn";
       }
     };
@@ -129,7 +179,15 @@ app.controller("signinController", [
           $scope.feedback.class = "red-text white btn";
           $scope.formdata = {};
         } else {
-          $location.path("/subscribe");
+          $http
+            .get("backend/users/subscribestatus.php")
+            .then(function(response) {
+              if (response.data == "1") {
+                $location.path("/service");
+              } else {
+                $location.path("/subscribe");
+              }
+            });
         }
       });
     };
@@ -153,11 +211,6 @@ app.controller("subscribeController", [
         }
       });
     };
-    $scope.checkauth = function() {
-      $http.get("backend/includes/authstatus.php").then(function(response) {
-        alert(response.data);
-      });
-    };
   }
 ]);
 
@@ -177,24 +230,124 @@ app.controller("serviceController", [
         }
       });
     };
-    $scope.daysleft = 2;
-    $scope.casts = [
-      {
-        date: "11/04/19",
-        time: "9:30pm",
-        league: "sweden phisvensran",
-        game: "malmo vs sundsvail",
-        prediction: "malmo wins",
-        Odds: 1.56
-      },
-      {
-        date: "11/04/19",
-        time: "9:30pm",
-        league: "sweden phisvensran",
-        game: "malmo vs sundsvail",
-        prediction: "malmo wins",
-        Odds: 1.56
-      }
-    ];
+    $scope.daysleft = $rootScope.daysleft;
+    $scope.predict = $rootScope.sortedpred;
+    //sorted arrays of predictions
+    $scope.midnight = $scope.predict[0];
+    $scope.low = $scope.predict[1];
+    $scope.other = $scope.predict[2];
+    $scope.plustwo = $scope.predict[3];
+  }
+]);
+
+//wb-signin controller
+app.controller("wb-signinController", [
+  "$scope",
+  "$rootScope",
+  "$http",
+  "$location",
+  function($scope, $rootScope, $http, $location) {
+    $scope.data = {};
+    $scope.login = function() {
+      $http({
+        url: "backend/admin/login.php",
+        method: "POST",
+        data: $scope.data
+      }).then(function(response) {
+        if (response.data === "1") {
+          $rootScope.admin = true;
+          $location.path("/wb-admin");
+        } else {
+          alert("access denied");
+        }
+      });
+    };
+  }
+]);
+
+//wb-admin controller
+app.controller("wb-adminController", [
+  "$scope",
+  "$rootScope",
+  "$http",
+  "$location",
+  function($scope, $rootScope, $http, $location) {
+    $scope.data = {};
+    $scope.subdata = {};
+    $scope.wins = {};
+    $scope.predictions = $rootScope.pred;
+    //add predictions
+    $scope.add = function() {
+      $http({
+        url: "backend/admin/addpredictions.php",
+        method: "POST",
+        data: $scope.data
+      }).then(function(response) {
+        if (response.data === "1") {
+          $scope.data = {};
+          $scope.get();
+        } else {
+          alert("failed to add for some reason");
+        }
+      });
+    };
+    $scope.remove = function(id) {
+      $http({
+        url: "backend/admin/deleteprediction.php",
+        method: "POST",
+        data: id
+      }).then(function(response) {
+        $scope.get();
+      });
+    };
+    $scope.subscribeuser = function() {
+      $http({
+        url: "backend/admin/subscribeuser.php",
+        method: "POST",
+        data: $scope.subdata
+      }).then(function(response) {
+        if (response.data == "1") {
+          $scope.subdata = {};
+          alert("done");
+        }
+      });
+    };
+    //add to winnings
+    $scope.addtowins = function() {
+      $http({
+        url: "backend/admin/addtowins.php",
+        method: "POST",
+        data: $scope.wins
+      }).then(function(response) {
+        if (response.data == "1") {
+          $scope.wins = {};
+          $scope.getwins();
+        }
+      });
+    };
+    //remove from winnings
+    $scope.remfromwins = function(id) {
+      $http({
+        url: "backend/admin/remfromwins.php",
+        method: "POST",
+        data: id
+      }).then(function(response) {
+        if (response.data == "1") {
+          $scope.getwins();
+        }
+      });
+    };
+    //get array of wins
+    $scope.getwins = function() {
+      $http.get("backend/admin/getwins.php").then(function(response) {
+        $scope.winrecord = response.data;
+      });
+    };
+    //get predictions
+    $scope.get = function() {
+      $http.get("backend/admin/getpredictions.php").then(function(response) {
+        $scope.predictions = response.data;
+      });
+    };
   }
 ]);

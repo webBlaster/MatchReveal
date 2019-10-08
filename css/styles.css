@@ -12,6 +12,7 @@ body{
     width:100%;
     background-color:rgba(255, 255, 255, 0.178);
     margin-top:80px;
+    border-radius: 4px;
     padding:20px;
 }
 #sub-form input{
@@ -28,15 +29,18 @@ body{
     border:none;
 }
 #second-section{
-    padding:0;
+    padding:0 0 0 0;
     margin:0;
+}
+#second-section h5{
+    margin-top:0;
 }
 #first-section .row{
     width:90%;
 }
 #navigation{
     padding:2px;
-    margin-left:83%;
+    margin-left:;
 }
 #track{
     width:60%;
@@ -48,10 +52,10 @@ body{
 
 #track td,#track th{
     text-align:center !important;
-    border:1px solid black;
+    padding:15px 2px;
+    border-radius: 0;
 }
 #navigation a{
-    color:white;
     padding:2px;
 }
 
@@ -75,15 +79,13 @@ body{
     width:80%;
 }
 #dashboard{
-    height: 100vh;
-    padding:60px;
 }
 #today{
     padding-bottom:200px;
 }
 #adminpage{
-    height:100vh !important;
     padding-top:10vh;
+    padding-bottom:100px;
 }
 #adminform{
     margin:auto;
@@ -99,17 +101,139 @@ body{
 #admin-login{
     height:100vh;
 }
+.main-container{
+    background-image:url(../images/indeximage.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+}
+.black-overlay{
+    background-color:rgba(0, 0, 0, 0.699);
+}
+.homefooter{
+    width:100%;
+    margin:50px 0 0 0;
+    padding:20px;
+    display: inline-block;
+}
+.homefooter span{
+    padding:5px;
+}
+.c-btn{
+    border:1px solid #00c848 !important;
+    border-radius:300px!important;
+    background-color:rgba(255, 255, 255, 0) !important;
+    color:#ff7a00 !important;
+}
+.c-btn:hover{
+    border-radius:300px!important;
+    background-color:#ff7a00 !important;
+    color:white !important;
+    border:none !important;
+}
+.logo{
+    margin-left:8%;
+}
+.logo-img{
+    width:20%;
+}
+.homelinks{
+    margin-left:55%;
+    top:-40px !important;
+    position: relative;
+}
+.homebrag{
+    font-size:20px;
+}
+.recordhead{
+    background-color:rgba(255, 255, 255, 0.651);
+}
+.record{
+    background-color:rgba(255, 255, 255, 0.068);
+}
+.read{
+    padding:2% 10% 10% 10%;
+}
 @media screen and (max-width:500px){
     #track{
         width:90%;
     }
     #navigation{
-        margin-left:65%;
+        margin-left:;
     }
     #signin-form{
         width:98%;
     }
     #adminform input{
         width:30%;
+    }
+    .homebrag{
+        font-size:16px;
+    }
+    .logo{
+        margin-left:8%;
+    }
+    .logo-img{
+        width:30%;
+    }
+    .homelinks{
+        top:-10px !important;
+        margin-left:15%;
+    }
+}
+
+/*subscribe page*/
+.paysection{
+    padding:20px;
+    margin:0 0 0 0;
+}
+.logout{
+    padding:20px 0 0 0;
+    margin:0 0 0 0;
+    color:white !important;
+}
+@media screen and (max-width:500px){
+    .paysection{
+        width:100%;
+    }
+}
+
+/*service page*/
+.service{
+    background-image: url(../images/indeximage.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    padding:0;
+    margin:0;
+}
+.nav{
+    padding-top:20px;
+    margin-top:0;
+    margin-left: 80%;
+}
+.nav span{
+    padding:6px;
+}
+@media screen and (max-width:500px){
+    .nav{
+        margin-left:38%;
+    }
+}
+
+/*admin page*/
+.tablespace{
+    margin:50px 0 50px 0 !important;
+}
+.subscribeuser{
+    padding:60px;
+    margin:auto;
+    width:60%;
+}
+.winnings{
+    margin:50px 0 0 0;
+}
+@media screen and (max-width:500px){
+    .subscribeuser{
+        width:100%;
     }
 }

@@ -1,61 +1,68 @@
+<div class="main-container">
 <!--first part-->
-<div id="first-section" class="blue-grey white-text section">
+<div id="first-section" class="white-text section black-overlay">
 <!--navigation part-->
-<div id="navigation" class="blue-black white-text">
-  <a href="">contact</a>
-  <a href="">policy</a>
-  <a href="#signin">signin</a>
+<div id="navigation" class="">
+  <span class="logo"><img src="images/Logo.png" alt="" class="logo-img"></span>
+  <span class="homelinks">
+      <a href="" class="white-text">Contact Us</a>
+      <a href="#/about" class="white-text">About Us</a>
+  </span>
 </div>
 
   <div class="row">
 
     <div id="first-column" class="col l6">
-        <p>Predict</p>
-      <h2>Get high converting odds and cash out big</h2>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-         Reiciendis voluptas repellat totam eligendi nesciunt, dolores dolorum ad velit voluptatibus,
-         mollitia culpa quam quia harum sapiente consequuntur rerum ea officiis id</p>
-         <div class="btn">Features</div>
-         <div class="btn"><a href="#signin" class="white-text">Signin</a></div>
+      <h2><b>GET DAILY 3+ ODDS ON OUR SPORT PREDICTION</b></h2>
+      <p class="homebrag">Marchreveal provides you with a wide range of predictions that you can count on.
+         Marchreveal is an online platform that provides daily sports tips for football,
+         basketball, tennis, volleyball, baseball, and others.
+         Our sole aim is to help people make consistent profits using predictions provided by our confirmed experts.     
+        </p>
     </div>
 
     <div class="col l6 center">
       <form ng-submit="register()" id="sub-form" class="center">
         <h5>Get started</h5>
-        <input ng-model="formdata.fullname" type="text" class="center" placeholder="Your Full name" required>
-        <input ng-model="formdata.email" type="email" class="center" placeholder="Email address" required>
-        <input ng-model="formdata.mobile" type="text" placeholder="Mobile Number" class="center" required>
-        <input ng-model="formdata.password" type="password" class="center" placeholder="Password" required>
-        <input ng-model="formdata.confirmpassword" type="password" class="center" placeholder="Confirm Password" required>
-        <input type="submit" class="btn" value="sign up">
+        <input ng-model="formdata.fullname" type="text" class="center white-text" placeholder="Your Full name" required>
+        <input ng-model="formdata.email" type="email" class="center white-text" placeholder="Email address" required>
+        <input ng-model="formdata.mobile" type="text" placeholder="Mobile Number" class="center white-text" required>
+        <input ng-model="formdata.password" type="password" class="center white-text" placeholder="Password" required>
+        <input ng-model="formdata.confirmpassword" type="password" class="center white-text" placeholder="Confirm Password" required>
+        <input type="submit" class="btn c-btn" value="sign up">
         <div id="message" class="{{feedback.class}} center">{{feedback.message}}</div>
-        <p>Already have an account <a href="#signin" style="color:white"><u>signin</u></a></p>
+        <p>Already have an account <a href="#signin" style="color:white"><u class="orange-text">signin</u></a></p>
       </form>
     </div>
 
   </div>
 </div>
 <!--second part-->
-<div id="second-section" class="blue-grey white-text section center">
-  <h5>Our track record</h5>
+<div id="second-section" class="white-text section center black-overlay">
+  <h5>Recent Winnings</h5>
   
-        <table id="track" class="white blue-grey-text">
-            <tr class="black white-text">
+        <table id="track" class="blue-grey-text">
+            <tr class="black-text recordhead">
                 <td>Date</td>
                 <td>Time</td>
                 <td>Game</td>
                 <td>Prediction</td>
-                <td>Odds</td>
                 <td>Result</td>
               </tr>
-          <tr ng-repeat="track in tracks">
-            <td>{{track.date}}</td>
+          <tr ng-repeat="track in tracks" class="white-text record">
+            <td>{{track.gamedate}}</td>
             <td>{{track.time}}</td>
             <td><span><b>{{track.league}}</b></span><br/>{{track.game}}</td>
             <td>{{track.prediction}}</td>
-            <td>{{track.Odds}}</td>
-            <td class="green white-text">{{track.result}}</td>
+            <td class="green white-text">win</td>
           </tr>
           </table>
+          <footer class="homefooter black">
+            <span><a href="" class="green-text"><i class="fab fa-facebook-square"></i></a></span>
+            <span><a href="" class="green-text"><i class="fab fa-instagram"></i></a></span>
+            <span><a href="#/policy" class="white-text">Refund Policy</a></span>
+            <span><a href="#/termsandcond" class="white-text">Terms & Condition</a></span>
+          </footer>
 
+</div>
 </div>
