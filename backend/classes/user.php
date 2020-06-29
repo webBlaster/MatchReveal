@@ -14,7 +14,6 @@ class User
         $checkersql = "SELECT * FROM users WHERE email = '$email' or fullname = '$fullname'";
         $connect = $this->db->connect();
         $check = $connect->query($checkersql);
-        $message;
         if($check->rowcount()==0){
 
             $currentdate = date('y/m/d',time());//current date
@@ -91,8 +90,8 @@ class User
      //checks user subscription status
      public function subscribestatus(){
          //get user email through sessions
-         //session_start();
-         /*$email = $_SESSION["user"];
+         session_start();
+         $email = $_SESSION["user"];
          $enddate = $this->getenddate($email);
         //current date
         $currentdate = date("Y-m-d",time());
@@ -100,8 +99,8 @@ class User
             echo "0";
         }else{
             echo "1";
-        }*/
-        echo "1";
+        }
+        //echo "1";
 
     }
     public function getdaysleft(){
