@@ -65,7 +65,7 @@ class Admin
     //add to winnings
     public function addtowins($game,$league,$time,$prediction,$gamedate){
         //sql to insert into wins table
-        $sql = "INSERT INTO wins (game,league,time,prediction,gamedate)
+        $sql = "INSERT INTO wins (game,league,time,prediction,date)
          VALUES('$game','$league','$time','$prediction','$gamedate')";
 
          $conn = $this->db->connect()->exec($sql);
