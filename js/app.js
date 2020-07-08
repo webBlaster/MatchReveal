@@ -146,10 +146,11 @@ app.controller("homeController", [
           data: $scope.formdata
         }).then(function(response) {
           console.log(response.data);
+          $scope.feedback.message = response.data;
+          $scope.feedback.class = "green-text white btn";
+          $scope.formdata = {};
         });
-        $scope.feedback.message = "user sucessfully created";
-        $scope.feedback.class = "green-text white btn";
-        $scope.formdata = {};
+        
       } else {
         $scope.formdata.password = "";
         $scope.formdata.confirmpassword = "";
